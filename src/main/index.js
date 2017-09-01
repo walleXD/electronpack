@@ -1,8 +1,9 @@
-import { join } from 'path'
-import { format } from 'url'
 import { BrowserWindow, app } from 'electron'
 import isDev from 'electron-is-dev'
+import windowStateKeeper from 'electron-window-state'
 import { replayActionMain } from 'electron-redux'
+import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer'
+
 import initStore from '../common/lib/initStore'
 
 let mainWindow
@@ -19,27 +20,29 @@ if (isDev) {
 }
 
 const createMainWindow = async () => {
-  // if (firstLoad && isDev) {
-  //   // await installExtension([
-  //   //   REACT_DEVELOPER_TOOLS,
-  //   //   REDUX_DEVTOOLS
-  //   // ])
-  //   await require('devtron').install()
-  //   firstLoad = false
-  // }
+  if (firstLoad && isDev) {
+    await installExtension([
+      REACT_DEVELOPER_TOOLS,
+      REDUX_DEVTOOLS
+    ])
+    await require('devtron').install()
+    firstLoad = false
+  }
 
-  // let windowState = windowStateKeeper({
-  //   defaultWidth: 1000,
-  //   defaultHeight: 500
-  // })
-
-  mainWindow = new BrowserWindow({
-    height: 500,
-    useContentSize: true,
-    width: 1000
+  let mainWindowState = windowStateKeeper({
+    defaultWidth: 1000,
+    defaultHeight: 500
   })
 
-  // windowState.manage(mainWindow)
+  mainWindow = new BrowserWindow({
+    'x': mainWindowState.x,
+    'y': mainWindowState.y,
+    'width': mainWindowState.width,
+    'height': mainWindowState.height,
+    useContentSize: true
+  })
+
+  mainWindowState.manage(mainWindow)
 
   mainWindow.loadURL(url)
 
