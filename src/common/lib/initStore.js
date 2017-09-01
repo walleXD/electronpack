@@ -37,7 +37,6 @@ if (process.type === 'renderer') {
 }
 
 export default (initialState = INITIAL_STATE, middlewares = defaultMiddlewares) => {
-  console.log('middlewares: ', middlewares)
   const store = createStore(
     reducers,
     initialState,
