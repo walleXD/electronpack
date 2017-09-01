@@ -2,10 +2,14 @@ import { join } from 'path'
 import { format } from 'url'
 import { BrowserWindow, app } from 'electron'
 import isDev from 'electron-is-dev'
+import { replayActionMain } from 'electron-redux'
+import initStore from '../common/lib/initStore'
 
 let mainWindow
 let firstLoad = true
 let url
+const store = initStore({ example: {score: 10} })
+replayActionMain(store)
 
 if (isDev) {
   require('electron-debug')({showDevTools: true})
