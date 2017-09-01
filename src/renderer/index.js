@@ -5,6 +5,7 @@ import { AppContainer } from 'react-hot-loader'
 
 import 'typeface-roboto'
 import './style/materialIcons.scss'
+import 'mdi/scss/materialdesignicons.scss'
 
 import App from './containers/App'
 

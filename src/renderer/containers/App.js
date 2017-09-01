@@ -9,6 +9,7 @@ import DefaultLayout from '../layouts/default'
 import HomePage from '../pages/home'
 import TestPage from '../pages/test'
 import {history} from '../lib'
+import StyleContainer from '../style/withMaterialRoot'
 
 const store = initStore()
 replayActionRenderer(store)
@@ -23,4 +24,4 @@ const App = () =>
     </Router>
   </Provider>
 
-export default App
+export default StyleContainer(App)
