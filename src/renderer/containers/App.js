@@ -1,15 +1,15 @@
 import React from 'react'
-import Switch from 'react-router-dom/Switch'
 import Router from 'react-router-redux/ConnectedRouter'
 import { Provider } from 'react-redux'
 import { replayActionRenderer } from 'electron-redux'
-import { Helmet } from 'react-helmet'
+import Switch from 'react-router-dom/Switch'
 
+import { history } from '../lib'
 import initStore from '../../common/lib/initStore'
+import MainWindowContainer from './WindowContainer'
 import DefaultLayout from '../layouts/default'
 import HomePage from '../pages/home'
 import TestPage from '../pages/test'
-import { history } from '../lib'
 import StyleContainer from '../style/withMaterialRoot'
 
 const store = initStore()
@@ -17,18 +17,14 @@ replayActionRenderer(store)
 
 const App = () =>
   <Provider store={store}>
-    <Router history={history}>
-      <div>
-        <Helmet
-          defaultTitle='electronPack'
-          titleTemplate='electronPack - %s'
-        />
+    <MainWindowContainer>
+      <Router history={history}>
         <Switch>
           <DefaultLayout title='Home' exact path='/' component={HomePage} />
-          <DefaultLayout path='/test' component={TestPage} />
+          <DefaultLayout title='Test' path='/test' component={TestPage} />
         </Switch>
-      </div>
-    </Router>
+      </Router>
+    </MainWindowContainer>
   </Provider>
 
 export default StyleContainer(App)

@@ -34,6 +34,7 @@ if (process.type === 'renderer') {
   // main thread middleware
   defaultMiddlewares.unshift(triggerAlias)
   defaultMiddlewares.push(forwardToRenderer)
+  console.log(...defaultMiddlewares)
 }
 
 export default (initialState = INITIAL_STATE, middlewares = defaultMiddlewares) => {
